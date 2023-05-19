@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "سمبوسه",
+    "img": "Images/Sliders/RecipePopulars/1.PNG"
+  },
+  {
+    "id": 2,
+    "title": "رنگینک",
+    "img": "Images/Sliders/RecipePopulars/2.jpg"
+  },
+  {
+    "id": 3,
+    "title": "فلافل",
+    "img": "Images/Sliders/RecipePopulars/3.PNG"
+  },
+  {
+    "id": 4,
+    "title": "پلو شوشتری",
+    "img": "Images/Sliders/RecipePopulars/4.jpg"
+  },
+  {
+    "id": 5,
+    "title": "قلیه ماهی",
+    "img": "Images/Sliders/RecipePopulars/5.jpg"
+  },
+  {
+    "id": 6,
+    "title": "دال عدس",
+    "img": "Images/Sliders/RecipePopulars/6.jpg"
+  }
+]
