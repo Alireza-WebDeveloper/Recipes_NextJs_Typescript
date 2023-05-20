@@ -38,7 +38,6 @@ const RecipesPage: FC<RecipesPage> = ({
         <title>ورگانتی | دستور غذای جنوبی</title>
       </Head>
       <Grid container>
-        <Grid item xs={12} p={2}></Grid>
         <Grid item lg={3} xs={12} p={2}>
           <Stack
             sx={{
@@ -72,6 +71,7 @@ const RecipesPage: FC<RecipesPage> = ({
               recipesData={recipesData}
               title={'غذاهای موجود'}
               activeMoreRecipes={false}
+              activeBreadCrumbs={true}
             />
           )}
         </Grid>
