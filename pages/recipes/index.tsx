@@ -7,7 +7,6 @@ import {
   getAsyncRecipesByQueryAndCategories,
 } from '@/Helpers/Recipes';
 import RecipesList from '@/Components/Recipes/RecipesList';
-import SearchBar from '@/Components/Forms/SearchBar';
 import RecipesCategoriesRegion from '@/Components/Recipes/RecipesCategoriesRegion';
 import RecipesEmpty from '@/Components/Recipes/RecipesEmpty';
 import BtnDefaultRecipes from '@/Components/Recipes/BtnDefaultRecipes';
@@ -18,17 +17,17 @@ import { getAsyncCategoriesByAll } from '@/Helpers/Categories';
 import SearchBar2 from '@/Components/Forms/SearchBar2';
 import { RecipeTypeList } from '@/models/Recipes';
 import { CategoriesType } from '@/models/Catgories';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-type RecipesPage = {
+type RecipesPageProps = {
   recipesData: RecipeTypeList;
   categoriesRegionData: CategoriesType;
 };
 
-const RecipesPage: FC<RecipesPage> = ({
+const RecipesPage = ({
   recipesData,
   categoriesRegionData,
-}) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { query } = router;
 
@@ -83,78 +82,59 @@ const RecipesPage: FC<RecipesPage> = ({
 export default RecipesPage;
 
 /// Get Async Categories Data (fs)
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { query } = ctx;
-  // categories by All
-  const { data: categoriesRegionData, error: errorCategoriesRegion } =
-    await getAsyncCategoriesByAll();
-  if (errorCategoriesRegion) {
-    return { notFound: true };
-  }
-  /// recipes by Query(Name) And Categories(Name)
-  if ('q' in query && 'categories' in query) {
-    const { q, categories }: any = query;
-    const { data: recipesData, error } =
-      await getAsyncRecipesByQueryAndCategories({
+export const getServerSideProps: GetServerSideProps<RecipesPageProps> = async (
+  ctx
+) => {
+  try {
+    const { query } = ctx;
+    const categoriesRegionData = await getAsyncCategoriesByAll();
+    // Get Recipes By Query And Categories
+    if ('q' in query && 'categories' in query) {
+      const { q, categories }: any = query;
+      const recipesData = await getAsyncRecipesByQueryAndCategories({
         q: q,
         categories: categories === 'تمامی' ? '' : categories,
       });
-    if (error) {
       return {
-        notFound: true,
+        props: {
+          recipesData,
+          categoriesRegionData,
+        },
       };
     }
+    // Get recipes by Query Name
+    if ('q' in query) {
+      const { q }: any = query;
+      const recipesData = await getAsyncRecipesByQuery(q);
+      return {
+        props: {
+          recipesData,
+          categoriesRegionData,
+        },
+      };
+    }
+    // Get Recipes By Categories Name
+    if ('categories' in query) {
+      const { categories }: any = query;
+      const recipesData = await getAsyncRecipesByCategories(
+        categories === 'تمامی' ? '' : categories
+      );
+      return {
+        props: {
+          recipesData,
+          categoriesRegionData,
+        },
+      };
+    }
+    // Get All Recipes
+    const recipesData = await getAsyncRecipesByAll();
     return {
       props: {
         recipesData,
         categoriesRegionData,
       },
     };
-  }
-  // recipes by Query Name
-  if ('q' in query) {
-    const { q }: any = query;
-    const { data: recipesData, error } = await getAsyncRecipesByQuery(q);
-    if (error) {
-      return {
-        notFound: true,
-      };
-    }
-    return {
-      props: {
-        recipesData,
-        categoriesRegionData,
-      },
-    };
-  }
-  /// recipes by Categories(Name)
-  if ('categories' in query) {
-    const { categories }: any = query;
-    const { data: recipesData, error } = await getAsyncRecipesByCategories(
-      categories === 'تمامی' ? '' : categories
-    );
-    if (error) {
-      return {
-        notFound: true,
-      };
-    }
-    return {
-      props: {
-        recipesData,
-        categoriesRegionData,
-      },
-    };
-  }
-
-  // recipes by default mode
-  const { data: recipesData, error } = await getAsyncRecipesByAll();
-  if (error) {
+  } catch (error) {
     return { notFound: true };
   }
-  return {
-    props: {
-      recipesData,
-      categoriesRegionData,
-    },
-  };
 };

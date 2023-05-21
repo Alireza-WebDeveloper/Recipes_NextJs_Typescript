@@ -6,11 +6,10 @@ import { getAsyncRecipesByLimit } from '@/Helpers/Recipes';
 import RecipesList from '@/Components/Recipes/RecipesList';
 import Head from 'next/head';
 import { getAsyncFsData } from '@/Helpers/Fs';
-import { FC } from 'react';
 import { BannerType } from '@/models/Banner';
 import { RecipePopularsTypeList } from '@/models/RecipePopulars';
 import { RecipeTypeList } from '@/models/Recipes';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 type HomeProps = {
   bannerData: BannerType;
@@ -18,11 +17,11 @@ type HomeProps = {
   recipesData: RecipeTypeList;
 };
 
-const Home: FC<HomeProps> = ({
+const Home = ({
   bannerData,
   recipePopularData,
   recipesData,
-}) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
@@ -51,28 +50,28 @@ const Home: FC<HomeProps> = ({
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
-  // BannerData
-  const bannerData = await getAsyncFsData<BannerType>({
-    folderName: 'data',
-    fileName: 'banner.json',
-  });
-  // recipePopularData(Slider)
-  const recipePopularData = await getAsyncFsData<RecipePopularsTypeList>({
-    folderName: 'data',
-    fileName: 'RecipePopulars.json',
-  });
-  // recipes(Food) With Check Error
-  const { data: recipesData, error } = await getAsyncRecipesByLimit(8);
-  if (error) {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  try {
+    const bannerData = await getAsyncFsData<BannerType>({
+      folderName: 'data',
+      fileName: 'banner.json',
+    });
+    // recipePopularData(Slider)
+    const recipePopularData = await getAsyncFsData<RecipePopularsTypeList>({
+      folderName: 'data',
+      fileName: 'RecipePopulars.json',
+    });
+    // recipes(Food) With Check Error
+    const recipesData = await getAsyncRecipesByLimit(8);
+    return {
+      props: {
+        bannerData,
+        recipesData,
+        recipePopularData,
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
     return { notFound: true };
   }
-  /// Return Props
-  return {
-    props: {
-      bannerData,
-      recipePopularData,
-      recipesData,
-    },
-  };
 };

@@ -6,18 +6,18 @@ const getAsyncRecipesByLimit = async (limit = 10) => {
     const response = await baseAxios.get<RecipeTypeResponseServer>(
       `/recipes?limit=${limit}`
     );
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 };
 // By All
 const getAsyncRecipesByAll = async () => {
   try {
     const response = await baseAxios.get<RecipeTypeResponseServer>('/recipes');
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 };
 // By Query = String('')
@@ -26,9 +26,9 @@ const getAsyncRecipesByQuery = async (q: string) => {
     const response = await baseAxios.get<RecipeTypeResponseServer>(
       `/recipes?q=${q}`
     );
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 };
 // By Categories = String('')
@@ -37,9 +37,9 @@ const getAsyncRecipesByCategories = async (categories: string) => {
     const response = await baseAxios.get<RecipeTypeResponseServer>(
       `/recipes?categories=${categories}`
     );
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 };
 // By Query = String('') And Categories = String('')
@@ -54,9 +54,9 @@ const getAsyncRecipesByQueryAndCategories = async ({
     const response = await baseAxios.get<RecipeTypeResponseServer>(
       `/recipes?q=${q}&categories=${categories}`
     );
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 };
 

@@ -6,9 +6,9 @@ const getAsyncCategoriesByAll = async () => {
     const response = await baseAxios.get<CategoriesResponseServerType>(
       '/categories'
     );
-    return { data: response.data.data, error: '' };
+    return response.data.data;
   } catch (error: any) {
-    return { data: null, error: error.message };
+     throw new Error(error.message)
   }
 };
 

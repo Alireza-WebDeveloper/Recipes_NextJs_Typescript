@@ -1,18 +1,22 @@
 import RecipeDetail from '@/Components/RecipeDetail';
-
 import { getAsyncRecipeDetail } from '@/Helpers/RecipeDetail';
 import { Box, Grid } from '@mui/material';
-import React, { FC } from 'react';
+import React  from 'react';
 import Head from 'next/head';
 import { RecipeTypeObj } from '@/models/Recipes';
-import { GetServerSideProps } from 'next';
+import {
+  GetServerSidePropsContext,
+  NextPage,
+} from 'next';
 import BreadCrumbsList from '@/Components/BreadCrumbs/BreadCrumbsList.tsx';
 
 type RecipeDetailPageProps = {
   recipeDetailData: RecipeTypeObj;
 };
 
-const RecipeDetailPage: FC<RecipeDetailPageProps> = ({ recipeDetailData }) => {
+const RecipeDetailPage: NextPage<RecipeDetailPageProps> = ({
+  recipeDetailData,
+}) => {
   const { name, _id } = recipeDetailData;
   return (
     <>
@@ -52,23 +56,21 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = ({ recipeDetailData }) => {
 
 export default RecipeDetailPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { params } = ctx;
-  if (params && 'id' in params) {
-    const { id } = params;
-    const { data: recipeDetailData, error } = await getAsyncRecipeDetail(id);
-    if (error) {
+  try {
+    if (params && 'id' in params) {
+      const { id } = params;
+      const recipeDetailData = await getAsyncRecipeDetail(id);
       return {
-        notFound: true,
+        props: {
+          recipeDetailData,
+        },
       };
     }
+  } catch (error) {
     return {
-      props: {
-        recipeDetailData,
-      },
+      notFound: true,
     };
   }
-  return {
-    notFound: true,
-  };
 };
