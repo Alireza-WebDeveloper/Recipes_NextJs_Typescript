@@ -6,16 +6,12 @@ import { FavoriteContext } from '@/Context/Favorite';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { RecipeTypeObj } from '@/models/Recipes';
+import { myLoaderPartialImageType } from '@/models/myLoaderImage';
 
 type FavoriteItemProps = {
   favorite: RecipeTypeObj;
 };
 
-type myLoaderProps = {
-  src: any;
-  quality: any;
-  width: any;
-};
 const FavoriteItem: FC<FavoriteItemProps> = ({ favorite }) => {
   const { images, name, _id, body } = favorite;
   const src = images[0];
@@ -36,7 +32,7 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ favorite }) => {
     });
   };
   // Load Image
-  const myLoader = ({ src, width, quality }: Partial<myLoaderProps>) => {
+  const myLoader = ({ src, width, quality }: myLoaderPartialImageType) => {
     return `${src}?w=${width}&q=${quality || 75}`;
   };
   return (

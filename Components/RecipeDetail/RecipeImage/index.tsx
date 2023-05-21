@@ -1,19 +1,14 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 import Image from 'next/image';
+import { myLoaderPartialImageType } from '@/models/myLoaderImage';
 
 type RecipeImageProps = {
   src: string;
 };
 
-type myLoaderProps = {
-  src: any;
-  quality: any;
-  width: any;
-};
-
 const RecipeImage: FC<RecipeImageProps> = ({ src }) => {
-  const myLoader = ({ src, width, quality }: Partial<myLoaderProps>) => {
+  const myLoader = ({ src, width, quality }: myLoaderPartialImageType) => {
     return `${src}?w=${width}&q=${quality || 75}`;
   };
   return (

@@ -16,15 +16,10 @@ import Link from 'next/link';
 import { FavoriteContext } from '@/Context/Favorite';
 import { toast } from 'react-toastify';
 import { RecipeTypeObj } from '@/models/Recipes';
+import { myLoaderPartialImageType } from '@/models/myLoaderImage';
 
 type RecipesItemProps = {
   recipe: RecipeTypeObj;
-};
-
-type myLoaderProps = {
-  src: any;
-  quality: any;
-  width: any;
 };
 
 const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
@@ -46,7 +41,7 @@ const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
   }, [favoriteData]);
 
   /// Load Image
-  const myLoader = ({ src, width, quality }: Partial<myLoaderProps>) => {
+  const myLoader = ({ src, width, quality }: myLoaderPartialImageType) => {
     return `${src}?w=${width}&q=${quality || 75}`;
   };
   const src = images[0];
