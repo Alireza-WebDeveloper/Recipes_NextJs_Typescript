@@ -96,7 +96,7 @@ const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
           >
             <Image
               loader={myLoader}
-              src={`${process.env.Image_URL}${src}`}
+              src={`${process.env.NEXT_PUBLIC_Image_URL}${src}`}
               alt={'image'}
               fill
               style={{ objectFit: 'cover', borderRadius: '0.3rem' }}

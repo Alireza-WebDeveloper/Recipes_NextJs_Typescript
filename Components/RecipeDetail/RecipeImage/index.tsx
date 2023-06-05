@@ -21,7 +21,7 @@ const RecipeImage: FC<RecipeImageProps> = ({ src }) => {
     >
       <Image
         loader={myLoader}
-        src={`${process.env.Image_URL}${src}`}
+        src={`${process.env.NEXT_PUBLIC_Image_URL}${src}`}
         alt={'image'}
         fill
         style={{ objectFit: 'fill', borderRadius: '0.2rem' }}

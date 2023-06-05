@@ -2,16 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  env: {
-    API_URL: 'http://localhost:3000/api',
-    Image_URL: 'http://localhost:3000',
-  },
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
+        protocol: `${process.env.NEXT_PUBLIC_Protocol}`,
+        hostname: `${process.env.NEXT_PUBLIC_HOST}`,
+        port: `${process.env.NEXT_PUBLIC_API_PORT}`,
         pathname: '/uploads/**',
       },
     ],

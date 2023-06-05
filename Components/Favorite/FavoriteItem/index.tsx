@@ -62,7 +62,7 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ favorite }) => {
         >
           <Image
             loader={myLoader}
-            src={`http://localhost:3000${src}`}
+            src={`${process.env.NEXT_PUBLIC_Image_URL}${src}`}
             alt={'image'}
             fill
             style={{
