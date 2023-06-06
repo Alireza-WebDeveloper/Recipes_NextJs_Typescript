@@ -87,9 +87,9 @@ const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
             component="section"
             sx={{
               height: {
-                md: '45svh',
-                sm: '55svh',
-                xs: '50svh',
+                md: '45vh',
+                sm: '55vh',
+                xs: '50vh',
               },
               position: 'relative',
             }}

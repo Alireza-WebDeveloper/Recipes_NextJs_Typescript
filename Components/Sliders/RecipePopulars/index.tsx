@@ -35,7 +35,7 @@ const RecipePopulars: FC<RecipePopularsProps> = ({ recipePopularData }) => {
             <Box
               component="section"
               sx={{
-                height: { md: '50svh', sm: '55svh', xs: '50svh' },
+                height: { md: '50vh', sm: '55vh', xs: '50vh' },
                 position: 'relative',
               }}
             >
