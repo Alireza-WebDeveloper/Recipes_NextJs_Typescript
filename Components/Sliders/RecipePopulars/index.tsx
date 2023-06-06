@@ -34,14 +34,17 @@ const RecipePopulars: FC<RecipePopularsProps> = ({ recipePopularData }) => {
           >
             <Box
               component="section"
-              sx={{ height: '43vh', position: 'relative' }}
+              sx={{
+                height: { md: '50svh', sm: '55svh', xs: '50svh' },
+                position: 'relative',
+              }}
             >
               <Image
                 loader={myLoader}
                 src={item.img}
                 alt={'image'}
                 fill
-                style={{ objectFit: 'cover', borderRadius: '0.3rem' }}
+                style={{ objectFit: 'fill', borderRadius: '0.3rem' }}
                 priority
                 sizes="(max-width: 1200px) 100vw"
               />
@@ -67,7 +70,13 @@ const RecipePopulars: FC<RecipePopularsProps> = ({ recipePopularData }) => {
           <Swiper
             style={{ cursor: 'pointer' }}
             slidesPerView={
-              isMatching.lg && isMatching.md ? 1 : isMatching.lg ? 3 : 3
+              isMatching.lg && isMatching.md && isMatching.sm
+                ? 1
+                : isMatching.lg && isMatching.md
+                ? 2
+                : isMatching.lg
+                ? 3
+                : 3
             }
             spaceBetween={15}
             autoplay={{

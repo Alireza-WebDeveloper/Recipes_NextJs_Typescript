@@ -87,9 +87,9 @@ const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
             component="section"
             sx={{
               height: {
-                md: '45vh',
-                sm: '50vh',
-                xs: '60vh',
+                md: '45svh',
+                sm: '55svh',
+                xs: '50svh',
               },
               position: 'relative',
             }}
@@ -99,7 +99,7 @@ const RecipesItem: FC<RecipesItemProps> = ({ recipe }) => {
               src={`${process.env.NEXT_PUBLIC_Image_URL}${src}`}
               alt={'image'}
               fill
-              style={{ objectFit: 'cover', borderRadius: '0.3rem' }}
+              style={{ objectFit: 'fill', borderRadius: '0.3rem' }}
               priority
               sizes="(max-width: 1200px) 100vw"
             />

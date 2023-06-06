@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import Banner from '@/Components/Banner';
 import RecipePopulars from '@/Components/Sliders/RecipePopulars';
 import { getAsyncRecipesByLimit } from '@/Helpers/Recipes';
@@ -31,18 +31,16 @@ const Home = ({
         <Grid item xs={12}>
           <Banner bannerData={bannerData} />
         </Grid>
-        <Container>
-          <Grid item xs={12} mt={2}>
-            <RecipePopulars recipePopularData={recipePopularData} />
-          </Grid>
-          <Grid item xs={12} mt={2}>
-            <RecipesList
-              recipesData={recipesData}
-              title={'غذا های موجود'}
-              activeMoreRecipes={true}
-            />
-          </Grid>
-        </Container>
+        <Grid item xs={12} mt={2} p={3}>
+          <RecipePopulars recipePopularData={recipePopularData} />
+        </Grid>
+        <Grid item xs={12} mt={2} p={3}>
+          <RecipesList
+            recipesData={recipesData}
+            title={'غذا های موجود'}
+            activeMoreRecipes={true}
+          />
+        </Grid>
       </Grid>
     </>
   );
